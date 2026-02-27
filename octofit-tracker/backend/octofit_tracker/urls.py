@@ -34,8 +34,11 @@ router.register(r'workouts', views.WorkoutViewSet)
 
 # Custom API root view to return API URLs with $CODESPACE_NAME
 def custom_api_root(request):
-    codespace_name = os.environ.get('CODESPACE_NAME', 'localhost')
-    base_url = f"https://{codespace_name}-8000.app.github.dev/api/"
+    codespace_name = os.environ.get('CODESPACE_NAME')
+    if codespace_name:
+        base_url = f"https://{codespace_name}-8000.app.github.dev/api/"
+    else:
+        base_url = "http://localhost:8000/api/"
     return JsonResponse({
         'users': base_url + 'users/',
         'teams': base_url + 'teams/',
