@@ -1,46 +1,63 @@
 import React, { useEffect, useState } from 'react';
+import { fetchFromAPI } from '../utils/api';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
-  const codespace = process.env.REACT_APP_CODESPACE_NAME;
-  const endpoint = `https://${codespace}-8000.app.github.dev/api/users/`;
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log('Users API endpoint:', endpoint);
-    fetch(endpoint)
-      .then(res => res.json())
-      .then(data => {
-        console.log('Fetched users data:', data);
-        setUsers(data.results || data);
-      })
-      .catch(err => console.error('Error fetching users:', err));
-  }, [endpoint]);
+    console.log('[Users Component] Initializing component and fetching users data...');
+    const loadUsers = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchFromAPI('users');
+        console.log('[Users Component] Successfully loaded users:', data);
+        setUsers(data);
+        setError(null);
+      } catch (err) {
+        console.error('[Users Component] Failed to load users:', err);
+        setError(err.message);
+        setUsers([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadUsers();
+  }, []);
 
   return (
     <div className="container mt-4">
       <h2>Users</h2>
-      <div className="table-responsive">
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Team</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user, idx) => (
-              <tr key={user.id || idx}>
-                <td>{user.id}</td>
-                <td>{user.name || 'N/A'}</td>
-                <td>{user.email || 'N/A'}</td>
-                <td>{user.team_name || user.team || 'N/A'}</td>
+      {loading && <div className="alert alert-info">Loading users...</div>}
+      {error && <div className="alert alert-danger">Error: {error}</div>}
+      {!loading && !error && users.length === 0 && (
+        <div className="alert alert-warning">No users found.</div>
+      )}
+      {!loading && !error && users.length > 0 && (
+        <div className="table-responsive">
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Team</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {users.map((user, idx) => (
+                <tr key={user.id || idx}>
+                  <td>{user.id}</td>
+                  <td>{user.name || 'N/A'}</td>
+                  <td>{user.email || 'N/A'}</td>
+                  <td>{user.team_name || user.team || 'N/A'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };

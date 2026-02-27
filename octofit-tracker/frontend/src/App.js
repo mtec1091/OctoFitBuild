@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import Activities from './components/Activities';
@@ -6,6 +6,7 @@ import Leaderboard from './components/Leaderboard';
 import Teams from './components/Teams';
 import Users from './components/Users';
 import Workouts from './components/Workouts';
+import { getAPIBaseURL } from './utils/api';
 
 function Home() {
   return (
@@ -66,6 +67,12 @@ function Home() {
 }
 
 function App() {
+  useEffect(() => {
+    console.log('[App] OctoFit Tracker initialized');
+    console.log('[App] API Base URL:', getAPIBaseURL());
+    console.log('[App] Available routes: Home, Users, Teams, Activities, Workouts, Leaderboard');
+  }, []);
+
   return (
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
