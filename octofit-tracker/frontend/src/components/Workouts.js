@@ -34,35 +34,77 @@ const Workouts = () => {
   }, []);
 
   return (
-    <div className="container mt-4">
-      <h2>Workouts</h2>
-      {loading && <div className="alert alert-info">Loading workouts...</div>}
-      {error && <div className="alert alert-danger">Error: {error}</div>}
-      {!loading && !error && workouts.length === 0 && (
-        <div className="alert alert-warning">No workouts found.</div>
+    <div className="container mt-5 mb-5">
+      <div className="row mb-4">
+        <div className="col-12">
+          <h2 className="mb-0">
+            <i className="bi bi-heart-pulse"></i> Workouts
+          </h2>
+          <p className="text-muted mt-2">Access personalized workout suggestions and routines</p>
+        </div>
+      </div>
+
+      {loading && (
+        <div className="alert alert-info alert-dismissible fade show" role="alert">
+          <div className="spinner-border spinner-border-sm me-2" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <strong>Loading workouts...</strong> Please wait while we fetch the data.
+        </div>
       )}
+
+      {error && (
+        <div className="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Error:</strong> {error}
+          <button type="button" className="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      )}
+
+      {!loading && !error && workouts.length === 0 && (
+        <div className="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>No workouts found.</strong> There are currently no workouts to display.
+          <button type="button" className="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      )}
+
       {!loading && !error && workouts.length > 0 && (
-        <div className="table-responsive">
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Activity</th>
-              </tr>
-            </thead>
-            <tbody>
-              {workouts.map((workout, idx) => (
-                <tr key={workout.id || idx}>
-                  <td>{workout.id}</td>
-                  <td>{workout.name || 'N/A'}</td>
-                  <td>{workout.description || 'N/A'}</td>
-                  <td>{workout.activity_name || workout.activity || 'N/A'}</td>
+        <div className="card shadow-sm border-0 mb-4">
+          <div className="card-header bg-gradient">
+            <h5 className="mb-0">All Workouts ({workouts.length})</h5>
+          </div>
+          <div className="table-responsive">
+            <table className="table table-hover table-striped mb-0">
+              <thead className="table-dark">
+                <tr>
+                  <th className="col-1">#</th>
+                  <th className="col-3">Workout Name</th>
+                  <th className="col-3">Description</th>
+                  <th className="col-2">Activity Type</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {workouts.map((workout, idx) => (
+                  <tr key={workout.id || idx} className="align-middle">
+                    <td>
+                      <span className="badge bg-primary rounded-pill">{workout.id}</span>
+                    </td>
+                    <td>
+                      <strong>{workout.name || 'N/A'}</strong>
+                    </td>
+                    <td>
+                      <span className="text-muted">{workout.description || 'No description available'}</span>
+                    </td>
+                    <td>
+                      <span className="badge bg-info">{workout.activity_name || workout.activity || 'N/A'}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="card-footer bg-light text-end text-muted small">
+            Showing {workouts.length} workout(s)
+          </div>
         </div>
       )}
     </div>

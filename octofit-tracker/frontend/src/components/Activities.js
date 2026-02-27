@@ -34,33 +34,73 @@ const Activities = () => {
   }, []);
 
   return (
-    <div className="container mt-4">
-      <h2>Activities</h2>
-      {loading && <div className="alert alert-info">Loading activities...</div>}
-      {error && <div className="alert alert-danger">Error: {error}</div>}
-      {!loading && !error && activities.length === 0 && (
-        <div className="alert alert-warning">No activities found.</div>
+    <div className="container mt-5 mb-5">
+      <div className="row mb-4">
+        <div className="col-12">
+          <h2 className="mb-0">
+            <i className="bi bi-lightning-charge"></i> Activities
+          </h2>
+          <p className="text-muted mt-2">Browse and manage fitness activities</p>
+        </div>
+      </div>
+
+      {loading && (
+        <div className="alert alert-info alert-dismissible fade show" role="alert">
+          <div className="spinner-border spinner-border-sm me-2" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <strong>Loading activities...</strong> Please wait while we fetch the data.
+        </div>
       )}
+
+      {error && (
+        <div className="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Error:</strong> {error}
+          <button type="button" className="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      )}
+
+      {!loading && !error && activities.length === 0 && (
+        <div className="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>No activities found.</strong> There are currently no activities to display.
+          <button type="button" className="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      )}
+
       {!loading && !error && activities.length > 0 && (
-        <div className="table-responsive">
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {activities.map((activity, idx) => (
-                <tr key={activity.id || idx}>
-                  <td>{activity.id}</td>
-                  <td>{activity.name || 'N/A'}</td>
-                  <td>{activity.description || 'N/A'}</td>
+        <div className="card shadow-sm border-0 mb-4">
+          <div className="card-header bg-gradient">
+            <h5 className="mb-0">All Activities ({activities.length})</h5>
+          </div>
+          <div className="table-responsive">
+            <table className="table table-hover table-striped mb-0">
+              <thead className="table-dark">
+                <tr>
+                  <th className="col-1">#</th>
+                  <th className="col-3">Activity Name</th>
+                  <th className="col-8">Description</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {activities.map((activity, idx) => (
+                  <tr key={activity.id || idx} className="align-middle">
+                    <td>
+                      <span className="badge bg-primary rounded-pill">{activity.id}</span>
+                    </td>
+                    <td>
+                      <strong>{activity.name || 'N/A'}</strong>
+                    </td>
+                    <td>
+                      <span className="text-muted">{activity.description || 'No description available'}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="card-footer bg-light text-end text-muted small">
+            Showing {activities.length} activity/activities
+          </div>
         </div>
       )}
     </div>
