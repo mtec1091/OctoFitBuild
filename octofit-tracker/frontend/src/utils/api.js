@@ -32,11 +32,20 @@ const getBaseURL = () => {
 /**
  * Fetch data from the REST API endpoint
  * @param {string} endpoint - The API endpoint (e.g., 'activities', 'users', 'teams')
+ * @param {string|null} token - Optional authentication token for Bearer authorization
  * @returns {Promise<Array>} Array of data from the API
  */
-export const fetchFromAPI = async (endpoint) => {
+export const fetchFromAPI = async (endpoint, token = null) => {
   const baseURL = getBaseURL();
   const fullURL = `${baseURL}/api/${endpoint}/`;
+
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+  
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
 
   console.log(`[API] ========================================`);
   console.log(`[API] Fetching from endpoint: ${endpoint}`);
@@ -44,7 +53,7 @@ export const fetchFromAPI = async (endpoint) => {
   console.log(`[API] ========================================`);
 
   try {
-    const response = await fetch(fullURL);
+    const response = await fetch(fullURL, { headers });
 
     console.log(`[API] Response status: ${response.status} ${response.statusText}`);
     
