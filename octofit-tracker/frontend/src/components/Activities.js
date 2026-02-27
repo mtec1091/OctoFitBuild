@@ -77,21 +77,29 @@ const Activities = () => {
               <thead className="table-dark">
                 <tr>
                   <th className="col-1">#</th>
-                  <th className="col-3">Activity Name</th>
-                  <th className="col-8">Description</th>
+                  <th className="col-3">Type</th>
+                  <th className="col-2">Duration</th>
+                  <th className="col-2">Calories</th>
+                  <th className="col-2">Date</th>
                 </tr>
               </thead>
               <tbody>
                 {activities.map((activity, idx) => (
                   <tr key={activity.id || idx} className="align-middle">
                     <td>
-                      <span className="badge bg-primary rounded-pill">{activity.id}</span>
+                      <span className="badge bg-primary rounded-pill">{idx + 1}</span>
                     </td>
                     <td>
-                      <strong>{activity.name || 'N/A'}</strong>
+                      <strong>{activity.activity_type || 'N/A'}</strong>
                     </td>
                     <td>
-                      <span className="text-muted">{activity.description || 'No description available'}</span>
+                      <span className="text-muted">{activity.duration ? `${activity.duration} min` : 'N/A'}</span>
+                    </td>
+                    <td>
+                      <span className="text-muted">{activity.calories_burned ?? 'N/A'}</span>
+                    </td>
+                    <td>
+                      <span className="text-muted">{activity.date || 'N/A'}</span>
                     </td>
                   </tr>
                 ))}

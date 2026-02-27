@@ -5,29 +5,41 @@ from .models import User, Team, Activity, LeaderboardEntry, Workout
 from .serializers import UserSerializer, TeamSerializer, ActivitySerializer, LeaderboardEntrySerializer, WorkoutSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = User.objects.filter(id__isnull=False)
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class ActivityViewSet(viewsets.ModelViewSet):
-    queryset = Activity.objects.all()
+    queryset = Activity.objects.filter(user__id__isnull=False)
     serializer_class = ActivitySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        filtered = [item for item in serializer.data if item.get('user') is not None]
+        return Response(filtered)
 
 class LeaderboardEntryViewSet(viewsets.ModelViewSet):
-    queryset = LeaderboardEntry.objects.all().order_by('-total_points')
+    queryset = LeaderboardEntry.objects.filter(user__id__isnull=False).order_by('-total_points')
     serializer_class = LeaderboardEntrySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        filtered = [item for item in serializer.data if item.get('user') is not None]
+        return Response(filtered)
 
 class WorkoutViewSet(viewsets.ModelViewSet):
     queryset = Workout.objects.all()
     serializer_class = WorkoutSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 @api_view(['GET'])
 def api_root(request, format=None):

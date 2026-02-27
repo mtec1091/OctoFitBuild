@@ -99,6 +99,12 @@ const Leaderboard = () => {
                 {leaderboard.map((entry, idx) => {
                   const rank = idx + 1;
                   const medal = getMedalIcon(rank);
+                  const userName = typeof entry.user === 'object' && entry.user
+                    ? (entry.user.username || entry.user_name || 'N/A')
+                    : (entry.user_name || entry.user || 'N/A');
+                  const teamName = typeof entry.team === 'object' && entry.team
+                    ? (entry.team.name || entry.team_name || 'No Team')
+                    : (entry.team_name || entry.team || 'No Team');
                   return (
                     <tr key={entry.id || idx} className="align-middle">
                       <td>
@@ -106,10 +112,10 @@ const Leaderboard = () => {
                         <span className="badge bg-primary rounded-pill ms-2">{rank}</span>
                       </td>
                       <td>
-                        <strong>{entry.user_name || entry.user || 'N/A'}</strong>
+                        <strong>{userName}</strong>
                       </td>
                       <td>
-                        <span className="badge bg-success">{entry.team_name || entry.team || 'No Team'}</span>
+                        <span className="badge bg-success">{teamName}</span>
                       </td>
                       <td>
                         <span className="badge bg-warning text-dark fw-bold" style={{fontSize: '1rem'}}>

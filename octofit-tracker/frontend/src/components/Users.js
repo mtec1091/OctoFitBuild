@@ -86,18 +86,18 @@ const Users = () => {
                 {users.map((user, idx) => (
                   <tr key={user.id || idx} className="align-middle">
                     <td>
-                      <span className="badge bg-primary rounded-pill">{user.id}</span>
+                      <span className="badge bg-primary rounded-pill">{idx + 1}</span>
                     </td>
                     <td>
-                      <strong>{user.name || 'N/A'}</strong>
+                      <strong>{user.username || 'N/A'}</strong>
                     </td>
                     <td>
-                      <a href={`mailto:${user.email}`} className="text-decoration-none">
+                      <a href={`mailto:${user.email || ''}`} className="text-decoration-none">
                         {user.email || 'N/A'}
                       </a>
                     </td>
                     <td>
-                      <span className="badge bg-success">{user.team_name || user.team || 'No Team'}</span>
+                      <span className="badge bg-secondary">Unassigned</span>
                     </td>
                   </tr>
                 ))}

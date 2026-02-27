@@ -78,15 +78,15 @@ const Workouts = () => {
                 <tr>
                   <th className="col-1">#</th>
                   <th className="col-3">Workout Name</th>
-                  <th className="col-3">Description</th>
-                  <th className="col-2">Activity Type</th>
+                  <th className="col-5">Description</th>
+                  <th className="col-3">Suggested For</th>
                 </tr>
               </thead>
               <tbody>
                 {workouts.map((workout, idx) => (
                   <tr key={workout.id || idx} className="align-middle">
                     <td>
-                      <span className="badge bg-primary rounded-pill">{workout.id}</span>
+                      <span className="badge bg-primary rounded-pill">{idx + 1}</span>
                     </td>
                     <td>
                       <strong>{workout.name || 'N/A'}</strong>
@@ -95,7 +95,11 @@ const Workouts = () => {
                       <span className="text-muted">{workout.description || 'No description available'}</span>
                     </td>
                     <td>
-                      <span className="badge bg-info">{workout.activity_name || workout.activity || 'N/A'}</span>
+                      <span className="badge bg-info">
+                        {Array.isArray(workout.suggested_for) && workout.suggested_for.length > 0
+                          ? workout.suggested_for.join(', ')
+                          : 'General'}
+                      </span>
                     </td>
                   </tr>
                 ))}

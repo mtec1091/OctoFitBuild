@@ -9,6 +9,15 @@ const getBaseURL = () => {
   console.log('[API] REACT_APP_CODESPACE_NAME:', process.env.REACT_APP_CODESPACE_NAME);
   console.log('[API] CODESPACE_NAME:', process.env.CODESPACE_NAME);
   console.log('[API] Resolved codespace name:', codespace);
+
+  if (typeof window !== 'undefined' && window.location && window.location.hostname) {
+    const host = window.location.hostname;
+    if (host.endsWith('-3000.app.github.dev')) {
+      const inferredBaseURL = `https://${host.replace('-3000.app.github.dev', '')}-8000.app.github.dev`;
+      console.log('[API] Inferred Codespaces base URL from window hostname:', inferredBaseURL);
+      return inferredBaseURL;
+    }
+  }
   
   if (!codespace) {
     console.warn('[API] CODESPACE_NAME environment variable not set. Using fallback URL: http://localhost:8000');
