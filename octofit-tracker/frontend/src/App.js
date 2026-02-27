@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, NavLink } from 'react-router-dom';
 import './App.css';
 import Activities from './components/Activities';
 import Leaderboard from './components/Leaderboard';
@@ -153,7 +153,8 @@ function App() {
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
         <div className="container-fluid">
           <Link className="navbar-brand fw-bold" to="/">
-            <i className="bi bi-lightning-charge me-2"></i>OctoFit Tracker
+            <img src="/octofitapp-small.png" alt="OctoFit logo" className="brand-logo" />
+            <span className="brand-text">OctoFit Tracker</span>
           </Link>
           <button 
             className="navbar-toggler" 
@@ -169,34 +170,34 @@ function App() {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">
+                <NavLink className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`} end to="/">
                   <i className="bi bi-house-fill me-1"></i>Home
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/users">
+                <NavLink className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`} to="/users">
                   <i className="bi bi-people me-1"></i>Users
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/teams">
+                <NavLink className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`} to="/teams">
                   <i className="bi bi-people-fill me-1"></i>Teams
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/activities">
+                <NavLink className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`} to="/activities">
                   <i className="bi bi-lightning-charge me-1"></i>Activities
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/workouts">
+                <NavLink className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`} to="/workouts">
                   <i className="bi bi-heart-pulse me-1"></i>Workouts
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/leaderboard">
+                <NavLink className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`} to="/leaderboard">
                   <i className="bi bi-trophy me-1"></i>Leaderboard
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </div>

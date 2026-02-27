@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, NavLink } from 'react-router-dom';
 import Activities from './components/Activities';
 import Leaderboard from './components/Leaderboard';
 import Teams from './components/Teams';
@@ -12,23 +12,31 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <nav>
-          <ul>
-            <li><Link to="/activities">Activities</Link></li>
-            <li><Link to="/leaderboard">Leaderboard</Link></li>
-            <li><Link to="/teams">Teams</Link></li>
-            <li><Link to="/users">Users</Link></li>
-            <li><Link to="/workouts">Workouts</Link></li>
-          </ul>
+        <nav className="top-nav">
+          <div className="nav-inner">
+            <Link to="/" className="brand-link">
+              <img src="/octofitapp-small.png" alt="OctoFit logo" className="brand-logo" />
+              <span>OctoFit Tracker</span>
+            </Link>
+            <ul className="nav-menu">
+              <li><NavLink to="/activities">Activities</NavLink></li>
+              <li><NavLink to="/leaderboard">Leaderboard</NavLink></li>
+              <li><NavLink to="/teams">Teams</NavLink></li>
+              <li><NavLink to="/users">Users</NavLink></li>
+              <li><NavLink to="/workouts">Workouts</NavLink></li>
+            </ul>
+          </div>
         </nav>
-        <Routes>
-          <Route path="/activities" element={<Activities />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
-          <Route path="/teams" element={<Teams />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/workouts" element={<Workouts />} />
-          <Route path="/" element={<h2>Welcome to OctoFit Tracker!</h2>} />
-        </Routes>
+        <main className="app-content">
+          <Routes>
+            <Route path="/activities" element={<Activities />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/teams" element={<Teams />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/workouts" element={<Workouts />} />
+            <Route path="/" element={<h2>Welcome to OctoFit Tracker!</h2>} />
+          </Routes>
+        </main>
       </div>
     </Router>
   );
