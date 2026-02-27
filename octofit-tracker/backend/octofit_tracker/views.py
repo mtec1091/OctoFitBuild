@@ -41,6 +41,18 @@ class WorkoutViewSet(viewsets.ModelViewSet):
     serializer_class = WorkoutSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        seen_names = set()
+        filtered = []
+        for item in serializer.data:
+            name = item.get('name')
+            if name and name not in seen_names:
+                seen_names.add(name)
+                filtered.append(item)
+        return Response(filtered)
+
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
