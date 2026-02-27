@@ -6,6 +6,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+console.log('[Index] ========================================');
+console.log('[Index] OctoFit Tracker Frontend Starting...');
+console.log('[Index] Environment Variables:');
+console.log('[Index] - NODE_ENV:', process.env.NODE_ENV);
+console.log('[Index] - REACT_APP_CODESPACE_NAME:', process.env.REACT_APP_CODESPACE_NAME);
+console.log('[Index] - CODESPACE_NAME:', process.env.CODESPACE_NAME);
+console.log('[Index] ========================================');
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

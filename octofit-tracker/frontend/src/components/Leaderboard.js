@@ -11,9 +11,16 @@ const Leaderboard = () => {
     const loadLeaderboard = async () => {
       try {
         setLoading(true);
+        console.log('[Leaderboard Component] Calling API endpoint: /api/leaderboard/');
         const data = await fetchFromAPI('leaderboard');
-        console.log('[Leaderboard Component] Successfully loaded leaderboard:', data);
-        setLeaderboard(data);
+        console.log('[Leaderboard Component] Raw API response:', data);
+        
+        // Handle both paginated (.results) and plain array responses
+        const leaderboardArray = Array.isArray(data) ? data : (data.results || []);
+        console.log('[Leaderboard Component] Parsed leaderboard array:', leaderboardArray);
+        console.log('[Leaderboard Component] Total leaderboard entries:', leaderboardArray.length);
+        
+        setLeaderboard(leaderboardArray);
         setError(null);
       } catch (err) {
         console.error('[Leaderboard Component] Failed to load leaderboard:', err);

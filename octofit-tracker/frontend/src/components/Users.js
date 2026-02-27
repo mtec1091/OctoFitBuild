@@ -11,9 +11,16 @@ const Users = () => {
     const loadUsers = async () => {
       try {
         setLoading(true);
+        console.log('[Users Component] Calling API endpoint: /api/users/');
         const data = await fetchFromAPI('users');
-        console.log('[Users Component] Successfully loaded users:', data);
-        setUsers(data);
+        console.log('[Users Component] Raw API response:', data);
+        
+        // Handle both paginated (.results) and plain array responses
+        const usersArray = Array.isArray(data) ? data : (data.results || []);
+        console.log('[Users Component] Parsed users array:', usersArray);
+        console.log('[Users Component] Total users count:', usersArray.length);
+        
+        setUsers(usersArray);
         setError(null);
       } catch (err) {
         console.error('[Users Component] Failed to load users:', err);

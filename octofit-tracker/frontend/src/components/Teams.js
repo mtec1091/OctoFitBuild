@@ -11,9 +11,16 @@ const Teams = () => {
     const loadTeams = async () => {
       try {
         setLoading(true);
+        console.log('[Teams Component] Calling API endpoint: /api/teams/');
         const data = await fetchFromAPI('teams');
-        console.log('[Teams Component] Successfully loaded teams:', data);
-        setTeams(data);
+        console.log('[Teams Component] Raw API response:', data);
+        
+        // Handle both paginated (.results) and plain array responses
+        const teamsArray = Array.isArray(data) ? data : (data.results || []);
+        console.log('[Teams Component] Parsed teams array:', teamsArray);
+        console.log('[Teams Component] Total teams count:', teamsArray.length);
+        
+        setTeams(teamsArray);
         setError(null);
       } catch (err) {
         console.error('[Teams Component] Failed to load teams:', err);

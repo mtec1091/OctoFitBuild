@@ -11,9 +11,16 @@ const Activities = () => {
     const loadActivities = async () => {
       try {
         setLoading(true);
+        console.log('[Activities Component] Calling API endpoint: /api/activities/');
         const data = await fetchFromAPI('activities');
-        console.log('[Activities Component] Successfully loaded activities:', data);
-        setActivities(data);
+        console.log('[Activities Component] Raw API response:', data);
+        
+        // Handle both paginated (.results) and plain array responses
+        const activitiesArray = Array.isArray(data) ? data : (data.results || []);
+        console.log('[Activities Component] Parsed activities array:', activitiesArray);
+        console.log('[Activities Component] Total activities count:', activitiesArray.length);
+        
+        setActivities(activitiesArray);
         setError(null);
       } catch (err) {
         console.error('[Activities Component] Failed to load activities:', err);

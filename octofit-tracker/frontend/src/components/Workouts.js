@@ -11,9 +11,16 @@ const Workouts = () => {
     const loadWorkouts = async () => {
       try {
         setLoading(true);
+        console.log('[Workouts Component] Calling API endpoint: /api/workouts/');
         const data = await fetchFromAPI('workouts');
-        console.log('[Workouts Component] Successfully loaded workouts:', data);
-        setWorkouts(data);
+        console.log('[Workouts Component] Raw API response:', data);
+        
+        // Handle both paginated (.results) and plain array responses
+        const workoutsArray = Array.isArray(data) ? data : (data.results || []);
+        console.log('[Workouts Component] Parsed workouts array:', workoutsArray);
+        console.log('[Workouts Component] Total workouts count:', workoutsArray.length);
+        
+        setWorkouts(workoutsArray);
         setError(null);
       } catch (err) {
         console.error('[Workouts Component] Failed to load workouts:', err);
