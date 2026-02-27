@@ -28,7 +28,7 @@ class ActivityViewSet(viewsets.ModelViewSet):
 class LeaderboardEntryViewSet(viewsets.ModelViewSet):
     queryset = LeaderboardEntry.objects.filter(user__id__isnull=False).order_by('-total_points')
     serializer_class = LeaderboardEntrySerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
