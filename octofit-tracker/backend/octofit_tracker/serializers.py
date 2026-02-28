@@ -22,9 +22,15 @@ class ActivitySerializer(serializers.ModelSerializer):
 class LeaderboardEntrySerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     team = TeamSerializer(read_only=True)
+    user_name = serializers.CharField(source='user.username', read_only=True)
+    team_name = serializers.SerializerMethodField()
+
+    def get_team_name(self, obj):
+        return obj.team.name if obj.team else None
+
     class Meta:
         model = LeaderboardEntry
-        fields = ['id', 'user', 'team', 'total_points']
+        fields = ['id', 'user', 'team', 'total_points', 'user_name', 'team_name']
 
 class WorkoutSerializer(serializers.ModelSerializer):
     suggested_for = UserSerializer(many=True, read_only=True)
