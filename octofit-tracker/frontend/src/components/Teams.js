@@ -77,8 +77,9 @@ const Teams = () => {
               <thead className="table-dark">
                 <tr>
                   <th className="col-1">#</th>
-                  <th className="col-3">Team Name</th>
-                  <th className="col-8">Description</th>
+                  <th className="col-4">Team Name</th>
+                  <th className="col-4">Members</th>
+                  <th className="col-3">Created At</th>
                 </tr>
               </thead>
               <tbody>
@@ -91,7 +92,10 @@ const Teams = () => {
                       <strong>{team.name || 'N/A'}</strong>
                     </td>
                     <td>
-                      <span className="text-muted">{team.description || 'No description available'}</span>
+                      <span className="badge bg-secondary">{Array.isArray(team.members) ? team.members.length : 0} member(s)</span>
+                    </td>
+                    <td>
+                      <span className="text-muted">{team.created_at ? new Date(team.created_at).toLocaleDateString() : 'N/A'}</span>
                     </td>
                   </tr>
                 ))}
