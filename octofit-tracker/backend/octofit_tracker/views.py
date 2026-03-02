@@ -7,27 +7,27 @@ from .serializers import UserSerializer, TeamSerializer, ActivitySerializer, Lea
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 class ActivityViewSet(viewsets.ModelViewSet):
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 class LeaderboardEntryViewSet(viewsets.ModelViewSet):
     queryset = LeaderboardEntry.objects.all().order_by('-total_points')
     serializer_class = LeaderboardEntrySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 class WorkoutViewSet(viewsets.ModelViewSet):
     queryset = Workout.objects.all()
     serializer_class = WorkoutSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 @api_view(['GET'])
 def api_root(request, format=None):

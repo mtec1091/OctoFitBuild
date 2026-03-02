@@ -89,7 +89,7 @@ const Users = () => {
                       <span className="badge bg-primary rounded-pill">{user.id}</span>
                     </td>
                     <td>
-                      <strong>{user.name || 'N/A'}</strong>
+                      <strong>{user.username || 'N/A'}</strong>
                     </td>
                     <td>
                       <a href={`mailto:${user.email}`} className="text-decoration-none">

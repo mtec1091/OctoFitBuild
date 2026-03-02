@@ -77,8 +77,12 @@ const Activities = () => {
               <thead className="table-dark">
                 <tr>
                   <th className="col-1">#</th>
-                  <th className="col-3">Activity Name</th>
-                  <th className="col-8">Description</th>
+                  <th className="col-2">User</th>
+                  <th className="col-2">Activity Type</th>
+                  <th className="col-1">Duration (min)</th>
+                  <th className="col-2">Calories Burned</th>
+                  <th className="col-2">Date</th>
+                  <th className="col-2">Team</th>
                 </tr>
               </thead>
               <tbody>
@@ -88,10 +92,16 @@ const Activities = () => {
                       <span className="badge bg-primary rounded-pill">{activity.id}</span>
                     </td>
                     <td>
-                      <strong>{activity.name || 'N/A'}</strong>
+                      <strong>{(activity.user && activity.user.username) || 'N/A'}</strong>
                     </td>
                     <td>
-                      <span className="text-muted">{activity.description || 'No description available'}</span>
+                      <span className="badge bg-info">{activity.activity_type || 'N/A'}</span>
+                    </td>
+                    <td>{activity.duration || 'N/A'}</td>
+                    <td>{activity.calories_burned || 'N/A'}</td>
+                    <td>{activity.date ? new Date(activity.date).toLocaleDateString() : 'N/A'}</td>
+                    <td>
+                      <span className="badge bg-success">{(activity.team && activity.team.name) || 'No Team'}</span>
                     </td>
                   </tr>
                 ))}
